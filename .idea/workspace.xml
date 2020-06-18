@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8cd86f09-010c-40e7-a0d7-8d407d3f6a6e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/gaby talavera" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/multiplicacion" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/resta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/suma" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1dVb1RGttfJUIEP2u3Ji8FjoCIt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\gabby\Documents\Gitkraken\wb-talavera-tipan-gabriela-belen\00-introducción" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8cd86f09-010c-40e7-a0d7-8d407d3f6a6e" name="Default Changelist" comment="" />
+      <created>1592512991977</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592512991977</updated>
+      <workItem from="1592512997913" duration="2556000" />
+      <workItem from="1592515777873" duration="57000" />
+      <workItem from="1592515835600" duration="281000" />
+    </task>
+    <task id="LOCAL-00001" summary="Crear archivo gitignore y mover archivos a 00-introduccion">
+      <created>1592515965103</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1592515965103</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Crear archivo gitignore y mover archivos a 00-introduccion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Crear archivo gitignore y mover archivos a 00-introduccion" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="602" y="36" key="CommitChangelistDialog2" timestamp="1592515964285">
+      <screen x="65" y="0" width="1535" height="900" />
+    </state>
+    <state x="602" y="36" key="CommitChangelistDialog2/65.0.1535.900@65.0.1535.900" timestamp="1592515964285" />
+    <state x="797" y="321" key="FileChooserDialogImpl" timestamp="1592515831623">
+      <screen x="65" y="0" width="1535" height="900" />
+    </state>
+    <state x="797" y="321" key="FileChooserDialogImpl/65.0.1535.900@65.0.1535.900" timestamp="1592515831623" />
+  </component>
+</project>
