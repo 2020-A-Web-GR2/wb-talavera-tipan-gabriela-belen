@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8cd86f09-010c-40e7-a0d7-8d407d3f6a6e" name="Default Changelist" comment="" />
+    <list default="true" id="8cd86f09-010c-40e7-a0d7-8d407d3f6a6e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/gaby talavera" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/multiplicacion" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/resta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/00-introducción/suma" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="Gaby Talavera &lt;gabriela.talavera@epn.edu.ec&gt;" />
-      </list>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1dVb1RGttfJUIEP2u3Ji8FjoCIt" />
@@ -35,7 +36,6 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\gabby\Documents\Gitkraken\wb-talavera-tipan-gabriela-belen\00-introduccion" />
       <recent name="C:\Users\gabby\Documents\Gitkraken\wb-talavera-tipan-gabriela-belen\00-introducción" />
     </key>
   </component>
@@ -52,7 +52,6 @@
       <workItem from="1592512997913" duration="2556000" />
       <workItem from="1592515777873" duration="57000" />
       <workItem from="1592515835600" duration="281000" />
-      <workItem from="1592517013718" duration="373000" />
     </task>
     <task id="LOCAL-00001" summary="Crear archivo gitignore y mover archivos a 00-introduccion">
       <created>1592515965103</created>
@@ -61,14 +60,7 @@
       <option name="project" value="LOCAL" />
       <updated>1592515965103</updated>
     </task>
-    <task id="LOCAL-00002" summary="Crear archivo gitignore y mover archivos a 00-introduccion">
-      <created>1592517274534</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1592517274534</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -79,10 +71,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Crear archivo gitignore y mover archivos a 00-introduccion" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="602" y="36" key="CommitChangelistDialog2" timestamp="1592517273730">
+    <state x="602" y="36" key="CommitChangelistDialog2" timestamp="1592515964285">
       <screen x="65" y="0" width="1535" height="900" />
     </state>
-    <state x="602" y="36" key="CommitChangelistDialog2/65.0.1535.900@65.0.1535.900" timestamp="1592517273730" />
+    <state x="602" y="36" key="CommitChangelistDialog2/65.0.1535.900@65.0.1535.900" timestamp="1592515964285" />
     <state x="797" y="321" key="FileChooserDialogImpl" timestamp="1592515831623">
       <screen x="65" y="0" width="1535" height="900" />
     </state>
