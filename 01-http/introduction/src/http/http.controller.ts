@@ -4,12 +4,12 @@ import {BadRequestException, Controller, Delete, Get, Header, HttpCode, Param, P
 @Controller('juegos-http')
 
 export class HttpJuegoController {
-    //@Get('holi')
-    //@HttpCode(201)
-    //holiGet() {
+    @Get('holi')
+    @HttpCode(201)
+    holiGet() {
         //throw new BadRequestException('No envia nada')
         //return 'Hola GET :P'
-    //}
+    }
 
     @Post('holi')
     @HttpCode(202)
@@ -25,17 +25,30 @@ export class HttpJuegoController {
         return 'Hola DELETE :P'
     }
 
-    //parametros de ruta
-    //http://localhost:3001/juegos-http/parametros-ruta/XX/gestion/YY
+    /*
+    parametros de ruta
+    http://localhost:3001/juegos-http/parametros-ruta/XX/gestion/YY
+    */
     @Get('/parametros-ruta/:edad/gestion:altura')
-    parametrosRutaEjem(
-        @Param() parametrosRuta) {
-        console.log('Parametros', parametrosRuta);
-        isNaN(parametrosRuta.edad)
-        isNaN(parametrosRuta.altura)
-        throw new BadRequestException('No son numeros')
-        const edad = Number(parametrosRuta.edad);
-        const altura = Number(parametrosRuta.altura);
+    parametrosRutaEjemplo(
+        @Param() parametrosRuta
+    ){
+        console.log('Parametros',parametrosRuta);
+        ///return 'ok';
+        let edad=0;
+        if(isNaN(parametrosRuta.edad))
+            throw new BadRequestException('No son numeros')
+        else
+            edad = Number(parametrosRuta.edad)
+
+        let altura=0;
+        if(isNaN(parametrosRuta.altura))
+            throw new BadRequestException('No son numeros')
+        else
+            altura= Number(parametrosRuta.altura)
+
+
         return edad+altura ;
     }
+
 }
