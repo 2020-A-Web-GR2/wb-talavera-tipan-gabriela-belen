@@ -29,24 +29,19 @@ export class HttpJuegoController {
     parametros de ruta
     http://localhost:3001/juegos-http/parametros-ruta/XX/gestion/YY
     */
-    @Get('/parametros-ruta/:edad/gestion:altura')
+    @Get('/parametros-ruta/:edad/gestion/:altura')
     parametrosRutaEjemplo(
         @Param() parametrosRuta
     ){
         console.log('Parametros',parametrosRuta);
         ///return 'ok';
         let edad=0;
-        if(isNaN(parametrosRuta.edad))
+        let altura=0;
+        if(isNaN(parametrosRuta.edad) || isNaN(parametrosRuta.altura) )
             throw new BadRequestException('No son numeros')
         else
             edad = Number(parametrosRuta.edad)
-
-        let altura=0;
-        if(isNaN(parametrosRuta.altura))
-            throw new BadRequestException('No son numeros')
-        else
             altura= Number(parametrosRuta.altura)
-
 
         return edad+altura ;
     }
