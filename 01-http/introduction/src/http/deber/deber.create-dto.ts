@@ -12,40 +12,30 @@
 //@IsNumber()
 
 import {
-    IsAlpha,
-    IsBoolean,
-    IsInt,
+    IsAlpha, IsInt,
     IsNotEmpty,
-    IsNumber,
-    IsOptional,
-    IsPositive,
+    IsNumber, IsPositive,
     MaxLength,
     MinLength
 } from "class-validator";
 
-export class MascotaCreateDto {
+export class DeberCreateDto {
 
     @IsAlpha()
     @IsNotEmpty()
     @MinLength(3)
     @MaxLength(60)
-    nombre: string;
+    username: string;
 
+    @IsNumber()
     @IsNotEmpty()
     @IsInt()
     @IsPositive()
-    edad: number;
+    valor1:number;
 
-    @IsNotEmpty()
-    @IsBoolean()
-    casada: boolean;
-
-    @IsBoolean()
-    @IsOptional()
-    ligada?: boolean;
-
-    @IsPositive()
     @IsNumber()
     @IsNotEmpty()
-    peso: number;
+    @IsInt()
+    @IsPositive()
+    valor2:number;
 }

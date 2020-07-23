@@ -1,6 +1,19 @@
-import {BadRequestException, Body, Controller, Delete, Get, Header, HttpCode, Param, Post, Query} from "@nestjs/common";
-import {isIP} from "net";
-import {types} from "util";
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Header,
+    HttpCode,
+    Param,
+    Post,
+    Query, Req, Res, Headers,
+
+} from "@nestjs/common";
+import {MascotaCreateDto} from "./dto/mascota.create-dto";
+import {validate, ValidationError} from 'class-validator';
+
 
 // http://localhost:3001/juegos-http
 @Controller('juegos-http')
@@ -59,17 +72,104 @@ export class HttpJuegoController {
         else
             return 'be happy';
     }
-    @Post('parametros-cuerpo')
-    parametrosCuerpo(
-        @Body() parametrosDcuerpo
-    ){
-        console.log('Parametros de cuerpo',parametrosDcuerpo)
-        return 'Registro creado';
 
+    @Post('parametros-cuerpo')
+    async parametrosCuerpo(
+        @Body() parametrosDcuerpo
+    ) {
+        //Promesas
+
+        const mascotaValida = new MascotaCreateDto();
+        mascotaValida.casada = parametrosDcuerpo.casada;
+        mascotaValida.edad = parametrosDcuerpo.edad;
+        mascotaValida.ligada = parametrosDcuerpo.ligada;
+        mascotaValida.nombre = parametrosDcuerpo.nombre;
+        mascotaValida.peso = parametrosDcuerpo.peso;
+        try {
+            const errores: ValidationError[] = await validate(mascotaValida);
+            if (errores.length > 0) {
+                console.error('Errores', errores);
+                throw new BadRequestException('Error validando');
+            } else {
+                const mensajeCorrecto = {
+                    mensaje: 'Se creo correctamente'
+                };
+                return mensajeCorrecto;
+            }
+        } catch (e) {
+                //Sirve para hacer debug
+                console.error('Error', e);
+                throw new BadRequestException('Error Validaciones');
+            }
+
+            console.log('Parametros de cuerpo', parametrosDcuerpo)
+            return 'Registro creado';
+
+        }
+    @Get("GuardarCookieInsegura")
+    guardarCookieInsegura(
+        @Query() parametrosConsulta,
+        @Req() req,
+        @Res() res,
+    ){
+        res.cookie(
+            'galletaInsegura',
+            'Tengo hambre'
+        );
+        const mensaje = {
+            mensaje: 'ok'
+        };
+        res.send(mensaje);
+    }
+
+    @Get("GuardarCookieSegura")
+    guardarCookieSegura(
+        @Query() parametrosConsulta,
+        @Req() req,
+        @Res() res,
+    ){
+        res.cookie(
+            'galleta Segura',
+            'Web: 3',
+            {secure:true
+            }
+        );
+        const mensaje = {
+            mensaje: 'ok'
+        };
+        res.send(mensaje);
+    }
+
+    @Get('mostrarCookies')
+    mostrarCookies(
+        @Req() req
+    ){
+        const mensaje ={
+            sinFirmar: req.cookies,
+            firmadas: req.signedCookies,
+        };
+        return mensaje;
+    }
+
+    @Get('guardarCookieFirmada')
+    public guardarCookieFirmada(
+        @Res() res,
+        @Headers() headers //peticion
+    ){
+        res.header('Cabecera','Dinamica'); //cabeceras de respuesta
+
+        res.cookie('firmada','poliburguer',{signed: true});
+        const mensaje = {
+            mensaje: 'ok'
+        };
+        res.send(mensaje);
     }
 
 
-}
+
+
+    }
+
 
 
 
