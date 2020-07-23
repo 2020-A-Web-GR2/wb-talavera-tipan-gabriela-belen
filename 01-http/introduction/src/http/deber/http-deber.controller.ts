@@ -26,6 +26,7 @@ export class HttpDeberController{
             '******Aplicaciones Web 2020A******'
     }
 
+
     //http://localhost:3001/deber-calculadora/sumar/2?n1=6
     @Get('/sumar/:n2')
     @HttpCode(200)
@@ -65,19 +66,21 @@ export class HttpDeberController{
     @Put('/restar')
     @HttpCode(201)
     async restar(
-        @Body() parametrosCuerpo,
+        @Body() parametrosCuerpo, //n1, n2
         @Req() req
     ) {
         if (this.verificarCookies(req)) {
             const valores = new DeberCreateDto()
             valores.valor1 = parametrosCuerpo.n1
             valores.valor2 = parametrosCuerpo.n2
+            //res.header('Cabecera', 'Dinamica');
             try {
                 const errores: ValidationError[] = await validate(valores)
                 if (errores.length > 0) {
                     console.error('Errooooor', errores)
                     throw new BadRequestException("Datos son incorrectos")
                 } else {
+                    //return "ok"
                     return valores.valor1 - valores.valor2
                 }
             } catch (e) {
@@ -94,19 +97,18 @@ export class HttpDeberController{
         @Headers() cabecera,
         @Req() req
     ){
-
-
         if(this.verificarCookies(req)){
             const valores=new DeberCreateDto()
             valores.valor1=Number(cabecera.n1)
             valores.valor2=Number(cabecera.n2)
+            //res.header('Cabecera', 'Dinamica');
             try{
                 const errores:ValidationError[]=await validate(valores)
                 if(errores.length>0){
                     console.error('Errooor',errores)
                     throw new BadRequestException("Datos ingresados incorrectos")
                 }else{
-
+                    //return "ok"
                     return valores.valor1*valores.valor2
                 }
             }catch (e){
@@ -151,7 +153,8 @@ export class HttpDeberController{
             return 'No se han guardado las cookies'
         }
     }
-    //http://localhost:3001/deber-calculadora/CookieUnsafe?Username=Gaby
+
+    //http://localhost:3001/deber-calculadora/guardarCookieUsername?username=Gaby
     @Get("guardarCookieUsername")
     @HttpCode(201)
     guardarCookie(
@@ -169,7 +172,7 @@ export class HttpDeberController{
                 res.send(mensaje);
                 //Ingresar acceso a calculadora
             }else{
-                 throw new BadRequestException('Ingrese username')
+                 throw new BadRequestException('Ingrese el nombre de usuario')
                 }
         }
 
@@ -184,8 +187,8 @@ export class HttpDeberController{
             const mensaje ={
                 sinFirmar: req.cookies,
             };
-            //return true;
-            return mensaje;
+            return true;
+            //return mensaje;
         }else{
             return false;
         }
