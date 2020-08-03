@@ -159,6 +159,10 @@ export class HttpJuegoController {
         res.header('Cabecera','Dinamica'); //cabeceras de respuesta
 
         res.cookie('firmada','poliburguer',{signed: true});
+        res.cookie('firmada','poliburguer1',{signed: true});
+        res.cookie('firmada','poliburguer2',{signed: true});
+        res.cookie('firmada','poliburguer3',{signed: true});
+
         const mensaje = {
             mensaje: 'ok'
         };
