@@ -87,7 +87,7 @@ export class HttpDeberController{
                 throw new BadRequestException("Error usando las validaciones")
             }
         } else {
-            return 'No estan guardadas las cookies'
+            return 'Registre un usuario'
         }
     }
 
@@ -116,7 +116,7 @@ export class HttpDeberController{
             }
 
         }else{
-            return 'No se guardaron las cookies'
+            return 'Registre un usuario'
         }
     }
 
@@ -150,7 +150,7 @@ export class HttpDeberController{
                 throw new BadRequestException("No es posible la peticion")
             }
         }else{
-            return 'No se han guardado las cookies'
+            return 'Registre un usuario'
         }
     }
 
