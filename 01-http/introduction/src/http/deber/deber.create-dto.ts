@@ -12,30 +12,24 @@
 //@IsNumber()
 
 import {
-    IsAlpha, IsInt,
+    IsInt,
     IsNotEmpty,
     IsNumber, IsPositive,
-    MaxLength,
-    MinLength
+
 } from "class-validator";
 
 export class DeberCreateDto {
 
-    @IsAlpha()
-    @IsNotEmpty()
-    @MinLength(3)
-    @MaxLength(60)
-    username: string;
-
     @IsNumber()
     @IsNotEmpty()
-    @IsInt()
     @IsPositive()
+    @IsInt()
     valor1:number;
 
     @IsNumber()
     @IsNotEmpty()
-    @IsInt()
     @IsPositive()
+    @IsInt()
     valor2:number;
+
 }
