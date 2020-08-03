@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   //LAS CONFIGURACIONES SE REALIZAN EN ESTA AREA
   //await app.listen(3001);
-  app.use(cookieParser('Me gustan las poliburguers'))
+  app.use(cookieParser('%%EXAMEN-WEB%%'))
   await app.listen(3001);
 }
 bootstrap();

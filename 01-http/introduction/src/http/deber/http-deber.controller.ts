@@ -1,64 +1,66 @@
+
 import {
     BadRequestException,
     Body,
     Controller,
     Delete,
     Get,
+    Header,
     Headers,
     HttpCode,
     Param,
     Post,
     Put,
-    Query,
-    Req,
-    Res
+    Query, Req, Res
 } from "@nestjs/common";
-import {validate, ValidationError} from "class-validator";
+import {Validate, validate, ValidationError} from "class-validator";
 import {DeberCreateDto} from "./deber.create-dto";
+import {DeberUsrCreateDto} from "./deberUsr.create-dto";
 
 @Controller('deber-calculadora')
 
 export class HttpDeberController{
+    puntaje=100;
+    disponible=false;
 
-    @Get('holi')
-    holiGet() {
-        return '******Gabriela Talavera' +
-            '******Aplicaciones Web 2020A******'
-    }
-
-
-    //http://localhost:3001/deber-calculadora/sumar/2?n1=6
     @Get('/sumar/:n2')
     @HttpCode(200)
     async sumar(
-        @Query() parametrosConsulta, //n1
-        @Param() parametrosRuta,  //n2
+        @Query() parametroConsulta, //n1
+        @Param() parametroRuta, //n2
         @Req() req,
         @Res() res
-    ) {
-
-        if (this.verificarCookies(req)) {
+    ){
+        if(this.verificarUsuario(req)){
             const valores=new DeberCreateDto()
-            valores.valor1= Number(parametrosConsulta.n1)
-            valores.valor2= Number(parametrosRuta.n2)
-            //res.header('Cabecera', 'Dinamica');
-            try {
-                //console.log(parametrosConsulta.n1 + parametrosRuta.n2)
-                const errores: ValidationError[] = await validate(valores)
-                if (errores.length < 0) {
-                    console.error('Errooor', errores)
+            valores.valor1= Number(parametroConsulta.n1)
+            valores.valor2=Number(parametroRuta.n2)
+            try{
+                console.log('Parametro consulta: '+parametroConsulta.n1+'  Parametro ruta:'+parametroRuta.n2)
+                const errores:ValidationError[]=await validate(valores)
+                if(errores.length>0){
+                    console.error('Errores',errores)
                     throw new BadRequestException("Datos incorrectos")
-                } else {
-                    return valores.valor2 + valores.valor1
+                }else{
+                    const total=valores.valor1+valores.valor2
+                    this.verificarPuntaje(total)
+                    if(this.disponible==true){
+                        res.send({
+                            mensaje:'Total suma:'+total+ ' '+req.cookies.usuario+' ya no tiene puntos. Se reiniciara a 100'
+                        });
+                    }else{
+                        res.send({
+                            mensaje: 'Total suma:'+total+' le quedan: '+this.puntaje + 'puntos'
+                        });
+                    }
                 }
             }catch(e){
-                console.error('Error', valores.valor2);
-                console.error('Error', valores.valor1);
-                throw new BadRequestException('Error con clase validator')
+                throw new BadRequestException("Error de validacion de datos");
             }
-
         }else{
-            return 'Registre un usuario'
+            res.send({
+                mensaje: 'Registre su username'
+            });
         }
     }
 
@@ -66,131 +68,168 @@ export class HttpDeberController{
     @Put('/restar')
     @HttpCode(201)
     async restar(
-        @Body() parametrosCuerpo, //n1, n2
-        @Req() req
-    ) {
-        if (this.verificarCookies(req)) {
-            const valores = new DeberCreateDto()
-            valores.valor1 = parametrosCuerpo.n1
-            valores.valor2 = parametrosCuerpo.n2
-            //res.header('Cabecera', 'Dinamica');
-            try {
-                const errores: ValidationError[] = await validate(valores)
-                if (errores.length > 0) {
-                    console.error('Errooooor', errores)
-                    throw new BadRequestException("Datos son incorrectos")
-                } else {
-                    //return "ok"
-                    return valores.valor1 - valores.valor2
-                }
-            } catch (e) {
-                throw new BadRequestException("Error usando las validaciones")
-            }
-        } else {
-            return 'Registre un usuario'
-        }
-    }
-
-    @Delete('multiplicar')
-    @HttpCode(200)
-    async multiplicar(
-        @Headers() cabecera,
-        @Req() req
+        @Body() parametroCuerpo, //n1 y n2
+        @Req() req,
+        @Res() res
     ){
-        if(this.verificarCookies(req)){
-            const valores=new DeberCreateDto()
-            valores.valor1=Number(cabecera.n1)
-            valores.valor2=Number(cabecera.n2)
-            //res.header('Cabecera', 'Dinamica');
+        if(this.verificarUsuario(req)){
+            const valores= new DeberCreateDto()
+            valores.valor1=parametroCuerpo.n1
+            valores.valor2=parametroCuerpo.n2
             try{
                 const errores:ValidationError[]=await validate(valores)
                 if(errores.length>0){
-                    console.error('Errooor',errores)
+                    console.error('Errores',errores)
                     throw new BadRequestException("Datos ingresados incorrectos")
                 }else{
-                    //return "ok"
-                    return valores.valor1*valores.valor2
+                    const total =valores.valor1-valores.valor2
+                    this.verificarPuntaje(total)
+                    if(this.disponible==true){
+                        res.send({
+                            mensaje:'Total resta: '+total+ ' ' +req.cookies.usuario+' ya no tiene puntos. Se reiniciara a 100'
+                        });
+                    }else{
+                        res.send({
+                            mensaje: 'Total resta:'+total+' le quedan: '+this.puntaje + ' puntos'
+                        });
+                    }
                 }
             }catch (e){
-                throw new BadRequestException("Error con class-validator")
+                throw new BadRequestException("Error de validacion de datos");
+            }
+        } else {
+            return 'No estan guardadas las cookies'
+        }
+  }
+
+    @Delete('/multiplicar')
+    @HttpCode(200)
+    async multiplicar(
+        @Headers() cabeceras, //n1 y n2
+        @Req() req,
+        @Res() res
+    ){
+        if(this.verificarUsuario(req)){
+            const valores=new DeberCreateDto()
+            valores.valor1= Number(cabeceras.n1)
+            valores.valor2=Number(cabeceras.n2)
+            try{
+                const errores:ValidationError[]=await validate(valores)
+                if(errores.length>0){
+                    console.error('Errores',errores)
+                    throw new BadRequestException("Datos ingresados incorrectos")
+                }else{
+                    const total=valores.valor1 * valores.valor2
+                    this.verificarPuntaje(total)
+                    if(this.disponible==true){
+                        res.send({
+                            mensaje:'Total multiplicacion: '+total+ ' ' +req.cookies.usuario+' ya no tiene puntos. Se reiniciara a 100'
+                        });
+                    }else{
+                        res.send({
+                            mensaje: 'Total resta:'+total+' le quedan: '+this.puntaje + ' puntos'
+                        });
+                    }
+                }
+            }catch (e){
+                throw new BadRequestException("Error de validacion de datos");
             }
 
         }else{
-            return 'Registre un usuario'
+            return 'No se guardaron las cookies'
         }
     }
 
-    @Post('division/:n1/div/:n2')
+    @Post('/dividir/:n1/para/:n2')
     @HttpCode(201)
     async dividir(
-        @Param() parametrosRuta,
-        @Req() req
-
+        @Param() parametrosRuta, //n1 y n2
+        @Req() req,
+        @Res() res
     ){
-        const bandera=this.verificarCookies(req)
-        if(bandera){
+        const disponible=this.verificarUsuario(req)
+        if(disponible){
             const valores=new DeberCreateDto()
-            valores.valor1=Number(parametrosRuta.n1)
+            valores.valor1= Number(parametrosRuta.n1)
             valores.valor2=Number(parametrosRuta.n2)
             try{
                 const errores:ValidationError[]=await validate(valores)
                 if(errores.length>0){
-                    console.error('Errooor',errores)
+                    console.error('Errores',errores)
                     throw new BadRequestException("Datos ingresados incorrectos")
                 }else{
                     if(valores.valor2==0){
-                        console.log('No se puede dividir para cero')
-                        throw new BadRequestException("Datos ingresados incorrectos")
+                        console.log('Error: No es posible dividir para 0')
+                        throw new BadRequestException('Error: No es posible dividir para 0')
                     }else{
-                        return valores.valor1/valores.valor2
+                        const total=valores.valor1/valores.valor2
+                        this.verificarPuntaje(total)
+                        if(this.disponible==true){
+                            res.send({
+                                mensaje:'Total division: '+total+ ' ' +req.cookies.usuario+' ya no tiene puntos. Se reiniciara a 100'
+                            });
+                        }else{
+                            res.send({
+                                mensaje: 'Total division:'+total+' le quedan: '+this.puntaje + ' puntos'
+                            });
+                        }
                     }
-
                 }
             }catch (e){
-                throw new BadRequestException("No es posible la peticion")
+                throw new BadRequestException("Error de validacion de datos");
             }
         }else{
-            return 'Registre un usuario'
+            return 'No se han guardado las cookies'
         }
     }
 
-    //http://localhost:3001/deber-calculadora/guardarCookieUsername?username=Gaby
-    @Get("guardarCookieUsername")
-    @HttpCode(201)
-    guardarCookie(
-        @Query() parametrosConsulta,
-        @Req() req,
-        @Res()  res
+
+    @Get('guardarCookieNombre')
+    guardarCookieNombre(
+        @Query() parametroConsulta,
+        @Res() res,
+
     ) {
-            const validarNombre = parametrosConsulta.username;
-                if(validarNombre){
-                res.cookie('username', validarNombre);
-                const mensaje={
-                    mensaje: "El nombre de usuario " + parametrosConsulta.username + "  Se ha creado correctamente"
-                }
-
-                res.send(mensaje);
-                //Ingresar acceso a calculadora
-            }else{
-                 throw new BadRequestException('Ingrese el nombre de usuario')
-                }
-        }
-
-
-    @Get("verificarCookies")
-    verificarCookies(
-        @Req() req, // request - peticion
-    ){
-        const mensaje=req.cookies
-        if(mensaje.username){
-
-            const mensaje ={
-                sinFirmar: req.cookies,
-            };
-            return true;
-            //return mensaje;
+        const username = new DeberUsrCreateDto()
+            username.username=parametroConsulta.username
+        if(username){
+            res.cookie('usuario', username)
+            res.cookie('puntaje',this.puntaje,{signed:true})
+            res.send("Usuario guardado exitosamente")
         }else{
-            return false;
+            throw new BadRequestException('Ingrese datos de usuario valido')
         }
     }
+    verificarUsuario(
+        @Req() req
+    ){
+        const cookie=req.cookies
+        if(cookie.usuario){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    verificarPuntaje(respuesta){
+        const temporal=this.puntaje-Math.abs(respuesta)
+        if(temporal<=0){
+            this.puntaje=100;
+            this.disponible=true;
+        }else{
+            this.puntaje=temporal
+            this.disponible=false
+        }
+    }
+    @Get('mostrarCookies')
+    mostrarCookies(
+        @Req() req
+    ){
+        const mensaje ={
+            sinFirmar: req.cookies,
+            firmadas: req.signedCookies,
+        };
+        return mensaje;
+    }
+
 }
