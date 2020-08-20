@@ -10,9 +10,9 @@ import {
     Put
 } from "@nestjs/common";
 import {UsuarioService} from "./usuario.service";
-import objectContaining = jasmine.objectContaining;
 import {UsuarioCreateDto} from "./dto/usuario.create-dto";
 import {UsuarioUpdateDto} from "./dto/usuario.update-dto";
+
 
 @Controller('usuario')
 
