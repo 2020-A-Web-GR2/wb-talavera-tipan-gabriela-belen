@@ -6,6 +6,10 @@ import {HttpDeberModule} from "./http/deber/http-deber.module";
 import {UsuarioModule} from "./Usuario/usuario.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {UsuarioEntity} from "./Usuario/usuario.entity";
+import {MascotaModule} from "./mascota/mascota.module";
+import {VacunaModule} from "./vacuna/vacuna.module";
+import {MascotaEntity} from "./mascota/mascota.entity";
+import {VacunaEntity} from "./vacuna/vacuna.entity";
 //decorador
 @Module({
   imports: [
@@ -13,6 +17,8 @@ import {UsuarioEntity} from "./Usuario/usuario.entity";
       HttpJuegoModule,
       HttpDeberModule,
       UsuarioModule,
+      MascotaModule,
+      VacunaModule,
       TypeOrmModule
           .forRoot( {
               name:'default', //nombre conexion
@@ -23,7 +29,9 @@ import {UsuarioEntity} from "./Usuario/usuario.entity";
             password: 'root',
             database:'ejemplo', //Base de datos
             entities:[ //Todas las entidades
-                UsuarioEntity
+                UsuarioEntity,
+                MascotaEntity,
+                VacunaEntity,
 
             ],
             synchronize: true, //actualiza el esquema de la base de datos
