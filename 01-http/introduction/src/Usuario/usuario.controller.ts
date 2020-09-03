@@ -4,7 +4,7 @@ import {
     Controller,
     Delete,
     Get,
-    InternalServerErrorException,
+    InternalServerErrorException, NotFoundException,
     Param,
     Post,
     Put, Res
@@ -235,12 +235,60 @@ export class UsuarioController {
     ){
         const nombreControlador ='Gaby';
         res.render(
+<<<<<<< HEAD
             'ejemplo',//nombre de la vista
+=======
+            'usuario/ejemplo',//nombre de la vista
+>>>>>>> master
         {//Parametros de la vista
             nombre: nombreControlador,
         })
     }
 
+<<<<<<< HEAD
+=======
+    @Get('vista/faq')
+faq(
+    @Res() res
+    ){
+        res.render('usuario/faq')
+    }
+
+    @Get('vista/inicio')
+    async inicio(
+        @Res() res
+    ){
+        let resultadoEncontrado
+        try {
+            resultadoEncontrado = await this._usuarioService.buscarTodos();
+        }catch (error) {
+         throw new  InternalServerErrorException('Error encontrando usuarios')
+                    }
+        if(resultadoEncontrado) {
+            res.render('usuario/inicio',{
+                arregloUsuarios: resultadoEncontrado
+            });
+        }else{
+        throw new NotFoundException('No se encontraron usuarios ')
+    }
+    }
+
+    @Get('vista/crear')
+    crearUsuarioVista(
+        @Res() res
+
+    ){
+        res.render('usuario/crear')
+    }
+
+@Get('vista/login')
+    login(
+        @Res() res
+    ){
+        res.render('usuario/login')
+    }
+
+>>>>>>> master
 }
 
 //XML <usuario>GABY</nombre></usuario>
