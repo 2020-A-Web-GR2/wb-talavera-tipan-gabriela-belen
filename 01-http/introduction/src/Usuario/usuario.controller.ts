@@ -235,12 +235,18 @@ export class UsuarioController {
     ){
         const nombreControlador ='Gaby';
         res.render(
+<<<<<<< HEAD
+            'ejemplo',//nombre de la vista
+=======
             'usuario/ejemplo',//nombre de la vista
+>>>>>>> master
         {//Parametros de la vista
             nombre: nombreControlador,
         })
     }
 
+<<<<<<< HEAD
+=======
     @Get('vista/faq')
 faq(
     @Res() res
@@ -282,6 +288,7 @@ faq(
         res.render('usuario/login')
     }
 
+>>>>>>> master
 }
 
 //XML <usuario>GABY</nombre></usuario>
