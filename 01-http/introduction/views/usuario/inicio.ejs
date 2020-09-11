@@ -28,18 +28,6 @@
 <a href="/usuario/vista/crear">
     <button>Crear</button>
 </a>
-
-<%if (typeof parametrosConsulta != 'undefined'){%>
-<p>MENSAJE: <%=parametrosConsulta.mensaje%></p>
-<%}%>
-
-<form action="/usuario/vista/inicio" method="Get">
-    <label for="busqueda">Busqueda: </label>
-    <input id="busqueda" type="text" name="busqueda">
-    <button type="submit">Buscar</button>
-</form>
-
-
 <table border="1">
     <tr>
         <th>Nombre</th>
@@ -54,16 +42,10 @@
         <td><%=objeto.cedula%></td>
         <td>
             <button>Ver</button>
-            <a href="/usuario/vista/editar/<%= objeto.id%>">
             <button>Editar</button>
-            </a>
-            <form action="/usuario/eliminarDesdeVista/<%=objeto.id%>" method="Post">
-                <button type="submit">Eliminar</button>
-            </form>
+            <button>Eliminar</button>
         </td>
     </tr>
 <%})%>
 </table>
-
-
 <%- include ('../compartida/funcionalidad-general/funcionalidad-general-component')%>
