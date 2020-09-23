@@ -113,7 +113,7 @@ export class UsuarioService{
         return this.repositorio.delete(id);
     }
 //usuario -> mascotas
-    //mascota -> vacunas
+    //libro -> vacunas
 
 
 }

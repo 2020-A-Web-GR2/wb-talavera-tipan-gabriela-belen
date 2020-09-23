@@ -3,7 +3,7 @@ import {UsuarioController} from "./usuario.controller";
 import {UsuarioService} from "./usuario.service";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {UsuarioEntity} from "./usuario.entity";
-import {MascotaModule} from "../mascota/mascota.module";
+import {LibroModule} from "../libro/libro.module";
 
 @Module(
     {
@@ -11,7 +11,7 @@ import {MascotaModule} from "../mascota/mascota.module";
             UsuarioController
         ],
         imports:[
-            MascotaModule,
+            LibroModule,
             TypeOrmModule
                 .forFeature([
                     UsuarioEntity

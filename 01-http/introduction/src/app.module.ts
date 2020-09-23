@@ -6,9 +6,9 @@ import {HttpDeberModule} from "./http/deber/http-deber.module";
 import {UsuarioModule} from "./Usuario/usuario.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {UsuarioEntity} from "./Usuario/usuario.entity";
-import {MascotaModule} from "./mascota/mascota.module";
+import {LibroModule} from "./libro/libro.module";
 import {VacunaModule} from "./vacuna/vacuna.module";
-import {MascotaEntity} from "./mascota/mascota.entity";
+import {LibroEntity} from "./libro/libro.entity";
 import {VacunaEntity} from "./vacuna/vacuna.entity";
 //decorador
 @Module({
@@ -17,7 +17,7 @@ import {VacunaEntity} from "./vacuna/vacuna.entity";
       HttpJuegoModule,
       HttpDeberModule,
       UsuarioModule,
-      MascotaModule,
+      LibroModule,
       VacunaModule,
       TypeOrmModule
           .forRoot( {
@@ -30,7 +30,7 @@ import {VacunaEntity} from "./vacuna/vacuna.entity";
             database:'ejemplo', //Base de datos
             entities:[ //Todas las entidades
                 UsuarioEntity,
-                MascotaEntity,
+                LibroEntity,
                 VacunaEntity,
 
             ],

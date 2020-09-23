@@ -1,6 +1,7 @@
 
 import {Column, Entity, Index, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {MascotaEntity} from "../mascota/mascota.entity";
+import {LibroEntity} from "../libro/libro.entity";
+import {RolEntity} from "../rol/rol.entity";
 
 @Index([
     'nombre',
@@ -65,10 +66,16 @@ export class UsuarioEntity{
     fechaNacimiento:string
 
     @OneToMany(
-        type => MascotaEntity,//que entide nos relacionamos
-        mascota => mascota.usuario
+        type => LibroEntity,//que entide nos relacionamos
+        libro => libro.usuario
     )
-    mascotas: MascotaEntity[];
+    libros: LibroEntity[];
+
+    @OneToMany(
+        type => RolEntity,//que entide nos relacionamos
+        rol => rol.usuario
+    )
+    rol: RolEntity[];
 
 }
 

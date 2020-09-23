@@ -12,7 +12,7 @@ import {
 import {UsuarioService} from "./usuario.service";
 import {UsuarioCreateDto} from "./dto/usuario.create-dto";
 import {UsuarioUpdateDto} from "./dto/usuario.update-dto";
-import {MascotaService} from "../mascota/mascota.service";
+import {LibroService} from "../libro/libro.service";
 import {catchError} from "rxjs/operators";
 import {UsuarioEntity} from "./usuario.entity";
 
@@ -36,7 +36,7 @@ export class UsuarioController {
 
     constructor(//inyeccion de dependencias)
      private readonly _usuarioService: UsuarioService,
-    private readonly _mascotaService: MascotaService
+    private readonly _libroService: LibroService
     ){
 
     }
@@ -218,8 +218,8 @@ export class UsuarioController {
         @Body() parametrosCuerpo
     ){
         const usuario= parametrosCuerpo.usuario;
-        const mascota = parametrosCuerpo.mascota;
-        //validar mascota
+        const libro = parametrosCuerpo.libro;
+        //validar libro
         //validar usuario
         //creamos los dos
         let usuarioCreado;
@@ -232,10 +232,10 @@ export class UsuarioController {
             })
         }
         if(usuarioCreado){
-            mascota.usuario = usuarioCreado.id;
+            libro.usuario = usuarioCreado.id;
             let mascotaCreada;
             try {
-                mascotaCreada = await this._mascotaService.crearNuevaMascota(mascota);
+                mascotaCreada = await this._libroService.crearNuevoLibro(libro);
             }catch (e){
                 console.error(e);
                 throw new BadRequestException({
