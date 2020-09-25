@@ -1,5 +1,6 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {LibroEntity} from "../libro/libro.entity";
+import {MascotaEntity} from "../mascota/mascota.entity";
+
 
 @Entity()
 export class VacunaEntity{
@@ -10,10 +11,10 @@ export class VacunaEntity{
     nombre: string;
 
     @ManyToOne(
-        type => LibroEntity,
-        libro=>libro.vacunas
+        type => MascotaEntity,
+        mascota=>mascota.vacunas
     )
-    libro: LibroEntity;
+    mascota: MascotaEntity;
 }
 
 

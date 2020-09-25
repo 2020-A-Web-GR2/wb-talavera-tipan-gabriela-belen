@@ -6,10 +6,10 @@ import {HttpDeberModule} from "./http/deber/http-deber.module";
 import {UsuarioModule} from "./Usuario/usuario.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {UsuarioEntity} from "./Usuario/usuario.entity";
-import {LibroModule} from "./libro/libro.module";
 import {VacunaModule} from "./vacuna/vacuna.module";
-import {LibroEntity} from "./libro/libro.entity";
 import {VacunaEntity} from "./vacuna/vacuna.entity";
+import {MascotaModule} from "./mascota/mascota.module";
+import {MascotaEntity} from "./mascota/mascota.entity";
 //decorador
 @Module({
   imports: [
@@ -17,11 +17,11 @@ import {VacunaEntity} from "./vacuna/vacuna.entity";
       HttpJuegoModule,
       HttpDeberModule,
       UsuarioModule,
-      LibroModule,
+      MascotaModule,
       VacunaModule,
       TypeOrmModule
           .forRoot( {
-              name:'default', //nombre conexion
+              name:'pruebas', //nombre conexion
               type: 'mysql', //mysql postgres
             host:'localhost', //ip
             port:3306, //puerto
@@ -30,7 +30,7 @@ import {VacunaEntity} from "./vacuna/vacuna.entity";
             database:'ejemplo', //Base de datos
             entities:[ //Todas las entidades
                 UsuarioEntity,
-                LibroEntity,
+                MascotaEntity,
                 VacunaEntity,
 
             ],
