@@ -3,13 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {HttpJuegoModule} from "./http/http-juego.module";
 import {HttpDeberModule} from "./http/deber/http-deber.module";
-import {UsuarioModule} from "./Usuario/usuario.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {UsuarioEntity} from "./Usuario/usuario.entity";
-import {VacunaModule} from "./vacuna/vacuna.module";
-import {VacunaEntity} from "./vacuna/vacuna.entity";
+import {UsuarioModule} from "./usuario/usuario.module";
 import {MascotaModule} from "./mascota/mascota.module";
+import {VacunaModule} from "./vacuna/vacuna.module";
+import {UsuarioEntity} from "./usuario/usuario.entity";
 import {MascotaEntity} from "./mascota/mascota.entity";
+import {VacunaEntity} from "./vacuna/vacuna.entity";
 //decorador
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import {MascotaEntity} from "./mascota/mascota.entity";
       VacunaModule,
       TypeOrmModule
           .forRoot( {
-              name:'pruebas', //nombre conexion
+              name:'default', //nombre conexion
               type: 'mysql', //mysql postgres
             host:'localhost', //ip
             port:3306, //puerto

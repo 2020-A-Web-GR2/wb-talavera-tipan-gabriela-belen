@@ -1,9 +1,10 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {MascotaEntity} from "../mascota/mascota.entity";
-
+import {Entity} from 'typeorm';
+import {Column, ManyToOne, PrimaryGeneratedColumn} from 'typeorm/index';
+import {UsuarioEntity} from '../usuario/usuario.entity';
+import {MascotaEntity} from '../mascota/mascota.entity';
 
 @Entity()
-export class VacunaEntity{
+export class VacunaEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,30 +13,7 @@ export class VacunaEntity{
 
     @ManyToOne(
         type => MascotaEntity,
-        mascota=>mascota.vacunas
+        mascota => mascota.vacunas
     )
     mascota: MascotaEntity;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

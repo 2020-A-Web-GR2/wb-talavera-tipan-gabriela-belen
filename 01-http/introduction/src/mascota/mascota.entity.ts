@@ -1,4 +1,5 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity} from 'typeorm';
+import {Column, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm/index';
 import {UsuarioEntity} from '../usuario/usuario.entity';
 import {VacunaEntity} from '../vacuna/vacuna.entity';
 
