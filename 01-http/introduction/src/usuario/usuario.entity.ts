@@ -13,7 +13,7 @@ import {MascotaEntity} from '../mascota/mascota.entity';
 //     ['nombre', 'apellido', 'cedula'],
 //     {unique: true}
 // )
-@Entity('epn_usuario') // nombre tabla usuario
+@Entity('ejemplo') // nombre tabla usuario
 export class UsuarioEntity {
     @PrimaryGeneratedColumn({
         unsigned: true,
