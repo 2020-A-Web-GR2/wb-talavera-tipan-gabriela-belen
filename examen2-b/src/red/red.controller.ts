@@ -1,17 +1,18 @@
 import {
     BadRequestException,
     Body,
-    Controller, Delete,
+    Controller,
     Get,
     InternalServerErrorException, NotFoundException,
     Param,
-    Post, Put, Query,
-    Res, ValidationError
+    Post, Query,
+    Res, Session
 } from "@nestjs/common";
 import {RedService} from "./red.service";
 import {RedCreateDto} from "./dto/red.create.dto";
-import {validate} from "class-validator";
 import {RedEntity} from "./red.entity";
+import {validate, ValidationError} from "class-validator";
+
 
 @Controller('red')
 export class RedController {
@@ -20,182 +21,127 @@ export class RedController {
     ) {
     }
 
-    @Get()
-    async mostrarTodos() {
-        try {
-            const respuesta = await this._redService.buscarTodos();
-            return respuesta;
-        } catch (e) {
-            console.error(e)
-            throw new InternalServerErrorException({
-                mensaje: 'Error del servidor',
-            })
-        }
-        // return this.arregloUsuarios
+    @Get('inicio')
+    async inicio(
+        @Res() res,
+        @Query() parametrosConsulta,
+        @Session() session
+    ) {
+        const estaLogeado = session.usuario;
+        if (estaLogeado) {
+            let resultadoEncontrado
+            try {
+                resultadoEncontrado = await this._redService.buscarTodos(parametrosConsulta.busqueda);
+            } catch (error) {
+                throw  new InternalServerErrorException('Error encontrando red')
+            }
+            if (resultadoEncontrado) {
+                res.render(
+                    'red/inicio',
+                    {
+                        redes: resultadoEncontrado,
+                        parametrosConsulta: parametrosConsulta,
+                        usuario: session.usuario,
+                        roles: session.roles
+                    }
+                )
+            } else {
+                throw new NotFoundException('No se encontraron redes')
+            }
+        } /*else {
+            return res.redirect('red/login')
+        }*/
     }
 
-    @Post()
-    async crearUno(
-        @Body() parametrosCuerpo
+    @Get('login')
+    login(
+        @Res() res
     ) {
+
+        res.render('red/login')
+    }
+
+    @Get('crear') // Controlador
+    VistaCrearRed(
+        @Query() parametrosConsulta,
+        @Res() res,
+        @Session() session
+    ) {
+        const estaLogeado = session.usuario;
+        if (estaLogeado) {
+            return res.render(
+                'red/crear',
+                {
+                    error: parametrosConsulta.error,
+                    nombre: parametrosConsulta.nombre,
+                    tipo: parametrosConsulta.tipo,
+                    numElements: parametrosConsulta.numElements,
+                    medio: parametrosConsulta.medio,
+                    alcance: parametrosConsulta.alcance,
+                    usuario: session.usuario,
+                    roles: session.roles
+                }
+            )
+        } else {
+            return res.redirect('/login')
+        }
+    }
+
+    @Post('crear')
+    async crearRed(
+        @Body() parametrosCuerpo,
+        @Res() res
+    ) {
+        const red = new RedCreateDto();
+        red.nombre = parametrosCuerpo.nombre;
+        red.tipo = parametrosCuerpo.tipo;
+        red.numElements = Number(parametrosCuerpo.numElements);
+        red.medio = parametrosCuerpo.medio;
+        red.alcance = Number(parametrosCuerpo.alcance);
+        //const tipomedio = `&tipo=${parametrosCuerpo.tipo}&medio=${parametrosCuerpo.medio}`
+
         try {
-            // Validacion del CREATE DTO
-            const respuesta = await this._redService.crearUno(parametrosCuerpo);
-            return respuesta;
+            const errores: ValidationError[] = await validate(red);
+            if (errores.length == 0) {
+                let respuestaCrearRed;
+                try {
+                    respuestaCrearRed = await this._redService.crearUno(parametrosCuerpo);
+                } catch (error) {
+                    console.error(error);
+                    const mensajeError = 'CREANDO DEPARTAMENTO 1'
+                    return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElements=${parametrosCuerpo.numElements}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
+                }
+                if (respuestaCrearRed) {
+                    return res.redirect('inicio')
+                } else {
+                    const mensajeError = 'CREANDO DEPARTAMENTO 2'
+                    return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElements=${parametrosCuerpo.numElements}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
+                }
+            } else {
+                const mensajeError = 'Datos incorrectos'
+                return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElements=${parametrosCuerpo.numElements}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
+            }
         } catch (e) {
-            console.error(e);
+            console.error(e)
             throw new BadRequestException({
                 mensaje: 'Error validando datos'
             });
         }
-
-        // const nuevoUsuario = {
-        //     id: this.idActual + 1,
-        //     nombre: parametrosCuerpo.nombre
-        // };
-        // this.arregloUsuarios.push(nuevoUsuario);
-        // this.idActual = this.idActual + 1;
-        // return nuevoUsuario;
     }
 
-    @Get(':id')
-    async verUno(
-        @Param() parametrosRuta
-    ) {
-        let respuesta;
-        try {
-            respuesta = await this._redService
-                .buscarUno(Number(parametrosRuta.id));
-        } catch (e) {
-            console.error(e)
-            throw new InternalServerErrorException({
-                mensaje: 'Error del servidor',
-            })
-        }
-        if (respuesta) {
-            return respuesta;
-        } else {
-            throw new NotFoundException({
-                mensaje: 'No existen registros',
-            })
-        }
-
-        // const indice = this.arregloUsuarios.findIndex(
-        //     // (usuario) => usuario.id === Number(parametrosRuta.id)
-        //     (usuario) => usuario.id === Number(parametrosRuta.id)
-        // )
-        // return this.arregloUsuarios[indice];
-
-    }
-
-    @Put(':id')
-    async editarUno(
-        @Param() parametrosRuta,
-        @Body() parametrosCuerpo
-    ) {
-        const id = Number(parametrosRuta.id);
-        const redEditada = parametrosCuerpo;
-        redEditada.id = id;
-        try {
-            console.log('redEditado', redEditada);
-            const respuesta = await this._redService
-                .editarUno(redEditada);
-            return respuesta;
-        } catch (e) {
-            console.error(e)
-            throw new InternalServerErrorException({
-                mensaje: 'Error del servidor',
-            })
-        }
-        // const indice = this.arregloUsuarios.findIndex(
-        //     // (usuario) => usuario.id === Number(parametrosRuta.id)
-        //     (usuario) => usuario.id === Number(parametrosRuta.id)
-        // );
-        // this.arregloUsuarios[indice].nombre = parametrosCuerpo.nombre;
-        // return this.arregloUsuarios[indice];
-    }
-
-    @Delete(':id')
-    async eliminarUno(
-        @Param() parametrosRuta
-    ) {
-        const id = Number(parametrosRuta.id);
-        try {
-            const respuesta = await this._redService
-                .eliminarUno(id);
-            return {
-                mensaje: 'Registro con id ' + id + ' eliminado'
-            };
-        } catch (e) {
-            console.error(e)
-            throw new InternalServerErrorException({
-                mensaje: 'Error del servidor',
-            })
-        }
-    }
-
-
-    @Get('vista/inicio')
-    inicio(
-        @Res() res
-    ) {
-
-        res.render('red/inicio')
-    }
-
-    @Post('/crearDesdeVista')
-    async crearDesdeVista(
-        @Body() parametrosCuerpo,
-        @Res() res
-    ) {
-        let red = new RedCreateDto();
-        red.nombre = parametrosCuerpo.nombre;
-        red.tipo = parametrosCuerpo.tipo;
-        red.numElements = parametrosCuerpo.numElements;
-        red.alcance = parametrosCuerpo.alcance;
-        red.medio= parametrosCuerpo.medio;
-
-        const tipomedio = `&tipo=${parametrosCuerpo.tipo}&medio=${parametrosCuerpo.medio}`
-        let errores: ValidationError[]
-        try{
-            //errores = await validate(red);
-            var mensaje = '';
-        }catch (e) {
-            console.error(e)
-            return res.redirect('/usuario/vista/crear?error=Error validadndo datos' + tipomedio);
-        }
-
-        if (errores.length > 0) {
-            console.error('Error', errores);
-            return res.redirect('/usuario/vista/crear?error=Error en los datos' + tipomedio);
-        }else{
-            let respuestaCreacionRed
-            try{
-                respuestaCreacionRed = await this._redService.crearUno(parametrosCuerpo)
-            } catch (error) {
-                console.log(error);
-                return res.redirect('/red/vista/crear?error=Error creando red' + tipomedio );
-            }
-            if(respuestaCreacionRed){
-                return res.redirect('/red/vista/inicio')
-            } else {
-                return res.redirect('/red/vista/crear?error=Error creando red' + tipomedio);
-            }
-        }
-    }
 
     @Post('eliminarDesdeVista/:id')
-    async eliminarDesdeVista(
+    async eliminarRed(
         @Param() parametrosRuta,
         @Res() res
     ) {
         try {
             const id = Number(parametrosRuta.id);
             await this._redService.eliminarUno(id)
-            return res.redirect('/usuario/vista/inicio?mensaje=Usuario eliminado')
+            return res.redirect('/red/inicio?mensaje=Usuario eliminado')
         } catch (error) {
             console.log(error);
-            return res.redirect('/usuario/vista/inicio?error=Error eliminando usuario')
+            return res.redirect('/red/inicio?error=Error eliminando usuario')
         }
 
     }
@@ -214,49 +160,12 @@ export class RedController {
         } as RedEntity;
         try {
             await this._redService.editarUno(redEditada);
-            return res.redirect('/usuario/vista/inicio?mensaje=Usuario editado');
+            return res.redirect('/red/inicio?mensaje=Usuario editado');
         }catch (error) {
             console.error(error);
-            return res.redirect('/usuario/vista/inicio?mensaje=Error editando usuario');
+            return res.redirect('/red/inicio?mensaje=Error editando usuario');
         }
-        // let usuarioEditado = new UsuarioEntity();
-        // usuarioEditado.id = parametrosRuta.id.toInt()
-        // usuarioEditado.nombre = parametrosCuerpo.nombre;
-        // usuarioEditado.apellido = parametrosCuerpo.apellido;
-        // usuarioEditado.cedula = parametrosCuerpo.cedula;
-        // usuarioEditado.sueldo = parametrosCuerpo.sueldo;
-        // usuarioEditado.fechaNacimiento = parametrosCuerpo.fechaNacimiento;
-        // usuarioEditado.fechaHoraNacimiento = parametrosCuerpo.fechaHoraNacimiento;
-        // usuarioEditado.mascotas = parametrosCuerpo.mascotas;
-        // let usuario:UsuarioUpdateDto = usuarioEditado
-        // let nombreApellidoConsulta = `&nombre=${parametrosCuerpo.nombre}&apellido=${parametrosCuerpo.apellido}`
-        // let cedulaConsulta = `&cedula=${parametrosCuerpo.cedula}`
-        // let errores: ValidationError[]
-        // try{
-        //     errores = await validate(usuario);
-        //     var mensaje = '';
-        // }catch (e) {
-        //     console.error(e)
-        //     return res.redirect('/usuario/vista/crear?error=Error validadndo datos' + nombreApellidoConsulta);
-        // }
-        //
-        // if (errores.length > 0) {
-        //     console.error('Error', errores);
-        //     return res.redirect('/usuario/vista/crear?error=Error en los datos' + nombreApellidoConsulta);
-        // }else{
-        //     let respuestaEditarUsuario
-        //     try{
-        //         respuestaEditarUsuario = await this._UsuarioService.editarUno(usuarioEditado)
-        //     } catch (error) {
-        //         console.log(error);
-        //         return res.redirect('/usuario/vista/crear?error=Error creando usuario' + nombreApellidoConsulta + cedulaConsulta);
-        //     }
-        //     if(respuestaEditarUsuario){
-        //         return res.redirect('/usuario/vista/inicio?mensaje=Usuario editado.')
-        //     } else {
-        //         return res.redirect('/usuario/vista/crear?error=Error creando usuario' + nombreApellidoConsulta + cedulaConsulta);
-        //     }
-        // }
+
     }
 
 }

@@ -1162,8 +1162,8 @@
         "affectsGlobalScope": false
       },
       "../src/app.controller.ts": {
-        "version": "3469c5aa62e1ba5b183d9bb9d40193e91aa761fc5734d332650b0bd49c346266",
-        "signature": "3293b0d1d6a7f902316e164fcf36ae099f1bbb0224484586eaab30d9dea78d32",
+        "version": "7f25265e811ef479d0cded6b7300fb5ad839139776103b07d348bd3f6da4243b",
+        "signature": "b4938537229b60c1ffc65fe150b5a2e6788d4d55305ad8f35eb361df05269b2f",
         "affectsGlobalScope": false
       },
       "../node_modules/typeorm/schema-builder/options/tablecolumnoptions.d.ts": {
@@ -2487,8 +2487,8 @@
         "affectsGlobalScope": false
       },
       "../src/red/red.service.ts": {
-        "version": "c9ab0e3bbd5d90234da9ec41c03dfb598d042ad6f92b143deb6ef50f9a349b8c",
-        "signature": "70f2d5da50e6e23e9962f4a5bfddd97b4dc2271849ffbdbf003d6eac57665622",
+        "version": "37d478414d6ec79bf367c1be2300f713c97e5775c88fed5090e8a1ce93013d3e",
+        "signature": "ba5486efea542ba6c4120667b30fd0e864e4b480a83b3f9c70c98c6810890d2d",
         "affectsGlobalScope": false
       },
       "../node_modules/class-validator/types/validation/validationerror.d.ts": {
@@ -3112,8 +3112,8 @@
         "affectsGlobalScope": false
       },
       "../src/red/red.controller.ts": {
-        "version": "903156712e30ce9159e37670fdebec12582cfe5c026ae196c0b72ea1b66a6c2c",
-        "signature": "fe1f75f469196a4ee5e1074e158de0daf6f533b391021467802dab94fc9237df",
+        "version": "efdec50a4e376b6c5d603e4906c6a6380780ced8528d33a2be80e6743a1c6982",
+        "signature": "1fc18803e907326d6d763c55b15449ee3f21d80eff412b7225a524572728c824",
         "affectsGlobalScope": false
       },
       "../src/red/red.module.ts": {
@@ -3307,7 +3307,7 @@
         "affectsGlobalScope": false
       },
       "../src/main.ts": {
-        "version": "3c8967198a459fe0868276c735fb4ecbe75c3ed2bbda02d4dcee787c5c448528",
+        "version": "374f24f7a082a52842225c6000ebfe2204421c49249f04b93535632357ed42fc",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
         "affectsGlobalScope": false
       },
@@ -9392,7 +9392,6 @@
         "../src/app.service.ts"
       ],
       "../src/red/red.controller.ts": [
-        "../src/red/red.entity.ts",
         "../src/red/red.service.ts"
       ],
       "../src/red/red.service.ts": [

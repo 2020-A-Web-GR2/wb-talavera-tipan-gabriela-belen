@@ -24,8 +24,36 @@ let RedService = class RedService {
     crearUno(nuevaRed) {
         return this.repository.save(nuevaRed);
     }
-    buscarTodos() {
-        return this.repository.find();
+    buscarTodos(textoConsulta) {
+        var valorNumerico;
+        if (parseInt(textoConsulta)) {
+            valorNumerico = parseInt(textoConsulta);
+        }
+        if (textoConsulta !== undefined) {
+            if (valorNumerico !== undefined) {
+                const consulta = {
+                    where: [
+                        {
+                            alcance: typeorm_2.MoreThanOrEqual(parseInt(textoConsulta))
+                        }
+                    ]
+                };
+                return this.repository.find(consulta);
+            }
+            else {
+                const consulta = {
+                    where: [
+                        {
+                            tipo: typeorm_2.Like(`%${textoConsulta}%`)
+                        }
+                    ]
+                };
+                return this.repository.find(consulta);
+            }
+        }
+        else {
+            return this.repository.find();
+        }
     }
     buscarUno(id) {
         return this.repository.findOne(id);

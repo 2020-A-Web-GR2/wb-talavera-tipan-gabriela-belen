@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
+import {FindManyOptions, Like, MoreThanOrEqual, Repository} from "typeorm";
 import {RedEntity} from "./red.entity";
 
 @Injectable()
@@ -15,8 +15,32 @@ export class RedService {
         return this.repository.save(nuevaRed) // promesa
     }
 
-    buscarTodos() {
-        return this.repository.find() // promesa
+    buscarTodos(textoConsulta?:string) {
+        var valorNumerico: number;
+        if(parseInt(textoConsulta)){valorNumerico = parseInt(textoConsulta)}
+        if(textoConsulta !== undefined) {
+            if(valorNumerico !== undefined) {
+                const consulta: FindManyOptions<RedEntity> = {
+                    where: [
+                        {
+                            alcance: MoreThanOrEqual(parseInt(textoConsulta))
+                        }
+                    ]
+                }
+                return this.repository.find(consulta)
+            }else{
+                const consulta: FindManyOptions<RedEntity> = {
+                    where: [
+                        {
+                            tipo: Like(`%${textoConsulta}%`)
+                        }
+                    ]
+                }
+                return this.repository.find(consulta)
+            }
+        }else{
+            return this.repository.find()
+        }//Promesa
     }
 
     buscarUno(id: number) {

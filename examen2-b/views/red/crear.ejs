@@ -1,56 +1,62 @@
 
-<html>
-<head>
+<% const esAdministrador = roles.some( (rol)=> rol == 'Administrador')%>
 
-</head>
-<body>
-<%- include('../compartido/estilos-generales/estilos-generales-component')%>
-<%- include('../compartido/menu/menu-component')%>
-<!--<form action="https://www.google.com" method="GET">-->
-<!--    <label for="query">Consulta:</label>-->
-<!--    <input type="text" id="query" name="q">-->
-<!--</form>-->
-<!-- usuario/crear.ejs-->
-<% const existeUsuario = typeof red != 'undefined'%>
+<% if(esAdministrador){%>
+
+<% const existeRed = typeof red != 'undefined'%>
 
 <% let existeNombre = typeof nombre !== 'undefined' %>
-<% let existeApellido = typeof tipo !== 'undefined' %>
-<% let existeCedula = typeof medio !== 'undefined' %>
+<% let existeTipo = typeof tipo !== 'undefined' %>
+<% let existeNumElements = typeof numElements !== 'undefined' %>
+<% let existeMedio = typeof medio !== 'undefined' %>
+<% let existeAlcance = typeof alcance !== 'undefined' %>
 
-<h1> <%= existeUsuario ? 'Editar' : 'Crear'%> red</h1>
-<% let href = existeUsuario ? "/red/editarDesdeVista/"+red.id : "/usuario/crearDesdeVista"%>
-<%if(existeUsuario){%>
+<h1> <%= existeRed ? 'Editar' : 'Crear Nueva'%> Red</h1>
+<% let href = existeRed ? "/red/editarDesdeVista/"+red.id : "/red/crear"%>
+
+<%if(existeRed){%>
     <% existeNombre = true %>
-    <% existeApellido = true %>
-    <% existeCedula = true %>
+    <% existeTipo = true %>
+    <% existeNumElements = true %>
+    <% existeMedio = true %>
+    <% existeAlcance = true %>
     <% nombre = red.nombre %>
     <% tipo = red.tipo %>
+    <% numElements = red.numElements %>
     <% medio = red.medio %>
+    <% alcance = red.alcance %>
 <%}%>
 
 <% if(error !== undefined) {%>
     <p>MENSAJE ERROR: <%= error%></p>
 <% }%>
-<form action="<%= href%>" method="POST">
+
+<form action="<%= existeRed ? '/red/editar/'+red.id:'/red/crear'%>" method="POST">
 
     <label for="nombreID">Nombre:</label>
     <input id="nombreID" type="text" name="nombre" value="<%= existeNombre ? nombre : '' %>">
     <br>
 
-    <label for="apellidoID">Apellido:</label>
-    <input id="apellidoID" type="text" name="apellido" value="<%= existeApellido ? apellido : '' %>">
+    <label for="tipoID">Tipo:</label>
+    <input id="tipoID" type="text" name="tipo" value="<%= existeTipo ? tipo : '' %>">
     <br>
 
-    <label for="cedulaID">Cedula:</label>
-    <input id="cedulaID"
-           type="text"
-           <%if(existeUsuario) {%>disabled<%}%>
-           name="cedula"
-           value="<%= existeCedula ? cedula : '' %>">
+    <label for="numElementsID">Numero de elementos:</label>
+    <input id="numElementsID" type="text" name="numElements" value="<%= existeNumElements ? numElements : '' %>">
     <br>
-    <button type="submit">SUBMIT</button>
+
+    <label for="medioID">Medio:</label>
+    <input id="medioID" type="text" name="medio" value="<%= existeMedio ? medio : '' %>">
+    <br>
+
+    <label for="alcanceID">Alcance:</label>
+    <input id="alcanceID" type="text" name="alcance" value="<%= existeAlcance ? alcance : '' %>">
+    <br>
+
+    <button type="submit">SUBMIT <%=existeRed ? "EDITAR" : "CREAR" %></button>
     <button type="reset">RESET</button>
-    <button type="button">BUTTON</button>
 </form>
-</body>
-</html>
+<a href="/red/inicio">
+    <button type="button">CANCELAR</button>
+</a>
+<% } %>
