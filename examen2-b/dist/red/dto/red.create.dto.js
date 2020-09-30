@@ -14,7 +14,6 @@ const class_validator_1 = require("class-validator");
 class RedCreateDto {
 }
 __decorate([
-    class_validator_1.IsAlpha(),
     class_validator_1.IsNotEmpty(),
     class_validator_1.MinLength(3),
     class_validator_1.MaxLength(60),
@@ -32,7 +31,7 @@ __decorate([
     class_validator_1.IsInt(),
     class_validator_1.IsPositive(),
     __metadata("design:type", Number)
-], RedCreateDto.prototype, "numElements", void 0);
+], RedCreateDto.prototype, "numElementos", void 0);
 __decorate([
     class_validator_1.IsAlpha(),
     class_validator_1.IsNotEmpty(),

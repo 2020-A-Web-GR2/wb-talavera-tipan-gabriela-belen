@@ -2,12 +2,16 @@
 
 <% if(esAdministrador){%>
 
+<%-include('../style-generals/style-generals')%>
+
     <h1>Inicio</h1>
-<a href="/red/crear">
-    <button>Crear</button>
+<a href="/red/crear" >
+    <button>Crear Nueva Red</button>
 </a>
+
     <form action="/red/inicio">
         <label for="busqueda">BUSCAR:</label>
+        <label>Tipo o alcance</label>
         <input id="busqueda" type="text" name="busqueda">
         <button type="submit"> Buscar</button>
     </form>
@@ -15,7 +19,7 @@
     <tr>
         <th>Nombre</th>
         <th>Tipo</th>
-        <th>NumElementos</th>
+        <th>Numero de Elementos</th>
         <th>Medio</th>
         <th>Alcance</th>
     </tr>
@@ -23,17 +27,16 @@
         <tr>
             <td><%= objeto.nombre %></td>
             <td><%= objeto.tipo %></td>
-            <td><%= objeto.numElements %></td>
+            <td><%= objeto.numElementos %></td>
             <td><%= objeto.medio %></td>
             <td><%= objeto.alcance %></td>
             <td>
-                <button>Ver</button>
-                <a href="/red/editar/<%= objeto.id %>">
+
+                <form action="/red/editar/<%= objeto.id %>" method="post">
                     <button>Editar</button>
-                </a>
+                </form>
                 <form action="/red/eliminarDesdeVista/<%= objeto.id %>"
-                      method="POST"
-                >
+                      method="POST">
                     <button type="submit">Eliminar</button>
                 </form>
             </td>

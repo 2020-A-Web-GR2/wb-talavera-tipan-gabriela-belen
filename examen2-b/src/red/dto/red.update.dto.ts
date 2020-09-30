@@ -2,7 +2,6 @@ import {IsAlpha, IsInt, IsNotEmpty, IsPositive, MaxLength, MinLength} from "clas
 
 export class RedUpdateDto {
 
-    @IsAlpha()
     @IsNotEmpty()
     @MinLength(3)
     @MaxLength(60)
@@ -17,7 +16,7 @@ export class RedUpdateDto {
     @IsNotEmpty()
     @IsInt()
     @IsPositive()
-    numElements?: number;
+    numElementos?: number;
 
     @IsAlpha()
     @IsNotEmpty()

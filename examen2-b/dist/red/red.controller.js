@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const red_service_1 = require("./red.service");
 const red_create_dto_1 = require("./dto/red.create.dto");
 const class_validator_1 = require("class-validator");
+const red_update_dto_1 = require("./dto/red.update.dto");
 let RedController = class RedController {
     constructor(_redService) {
         this._redService = _redService;
@@ -43,6 +44,9 @@ let RedController = class RedController {
                 throw new common_1.NotFoundException('No se encontraron redes');
             }
         }
+        else {
+            return res.redirect('red/login');
+        }
     }
     login(res) {
         res.render('red/login');
@@ -54,7 +58,7 @@ let RedController = class RedController {
                 error: parametrosConsulta.error,
                 nombre: parametrosConsulta.nombre,
                 tipo: parametrosConsulta.tipo,
-                numElements: parametrosConsulta.numElements,
+                numElementos: parametrosConsulta.numElementos,
                 medio: parametrosConsulta.medio,
                 alcance: parametrosConsulta.alcance,
                 usuario: session.usuario,
@@ -69,7 +73,7 @@ let RedController = class RedController {
         const red = new red_create_dto_1.RedCreateDto();
         red.nombre = parametrosCuerpo.nombre;
         red.tipo = parametrosCuerpo.tipo;
-        red.numElements = Number(parametrosCuerpo.numElements);
+        red.numElementos = Number(parametrosCuerpo.numElementos);
         red.medio = parametrosCuerpo.medio;
         red.alcance = Number(parametrosCuerpo.alcance);
         try {
@@ -82,19 +86,19 @@ let RedController = class RedController {
                 catch (error) {
                     console.error(error);
                     const mensajeError = 'CREANDO DEPARTAMENTO 1';
-                    return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElements=${parametrosCuerpo.numElements}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
+                    return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElementos=${parametrosCuerpo.numElementos}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
                 }
                 if (respuestaCrearRed) {
                     return res.redirect('inicio');
                 }
                 else {
                     const mensajeError = 'CREANDO DEPARTAMENTO 2';
-                    return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElements=${parametrosCuerpo.numElements}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
+                    return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElementos=${parametrosCuerpo.numElementos}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
                 }
             }
             else {
                 const mensajeError = 'Datos incorrectos';
-                return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElements=${parametrosCuerpo.numElements}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
+                return res.redirect('crear?error=' + mensajeError + `&nombre=${parametrosCuerpo.nombre}&tipo=${parametrosCuerpo.tipo}&numElementos=${parametrosCuerpo.numElementos}&medio=${parametrosCuerpo.medio}&alcance=${parametrosCuerpo.alcance}`);
             }
         }
         catch (e) {
@@ -108,26 +112,78 @@ let RedController = class RedController {
         try {
             const id = Number(parametrosRuta.id);
             await this._redService.eliminarUno(id);
-            return res.redirect('/red/inicio?mensaje=Usuario eliminado');
+            return res.redirect('/red/inicio?mensaje= Accion completada exitosamente');
         }
         catch (error) {
             console.log(error);
-            return res.redirect('/red/inicio?error=Error eliminando usuario');
+            return res.redirect('/red/inicio?error=Error al eliminar el registro');
         }
     }
-    async editarDesdeVista(parametrosRuta, parametrosCuerpo, res) {
-        const redEditada = {
-            id: Number(parametrosRuta.id),
-            medio: parametrosCuerpo.medio,
-            tipo: parametrosCuerpo.tipo,
-        };
-        try {
-            await this._redService.editarUno(redEditada);
-            return res.redirect('/red/inicio?mensaje=Usuario editado');
+    async vistaEditarRed(parametrosRuta, parametrosConsulta, res, session) {
+        const estaLogeado = session.usuario;
+        if (estaLogeado) {
+            const id = Number(parametrosRuta.id);
+            let resultadoEncontrado;
+            try {
+                resultadoEncontrado = await this._redService.buscarUno(id);
+            }
+            catch (error) {
+                console.error('Error del servidor');
+                return res.redirect('/red/inicio?mensaje=Error buscando redes');
+            }
+            if (resultadoEncontrado) {
+                return res.render('red/crear', {
+                    error: parametrosConsulta.error,
+                    red: resultadoEncontrado,
+                    usuario: session.usuario,
+                    roles: session.roles
+                });
+            }
+            else {
+                return res.redirect('/red/inicio?mensaje= Red no encontrada');
+            }
         }
-        catch (error) {
-            console.error(error);
-            return res.redirect('/red/inicio?mensaje=Error editando usuario');
+        else {
+            return res.redirect('/login');
+        }
+    }
+    async editarRed(parametrosRuta, parametrosCuerpo, res) {
+        const red = new red_update_dto_1.RedUpdateDto();
+        red.nombre = parametrosCuerpo.nombre;
+        red.tipo = parametrosCuerpo.tipo;
+        red.numElementos = Number(parametrosCuerpo.numElementos);
+        red.medio = parametrosCuerpo.medio;
+        red.alcance = Number(parametrosCuerpo.alcance);
+        try {
+            const errores = await class_validator_1.validate(red);
+            if (errores.length == 0) {
+                const redEditada = {
+                    id: Number(parametrosRuta.id),
+                    nombre: parametrosCuerpo.nombre,
+                    tipo: parametrosCuerpo.tipo,
+                    numElementos: Number(parametrosCuerpo.numElementos),
+                    medio: parametrosCuerpo.medio,
+                    alcance: Number(parametrosCuerpo.alcance)
+                };
+                try {
+                    await this._redService.editarUno(redEditada);
+                    return res.redirect('/red/inicio?mensaje=Red editada con exito');
+                }
+                catch (error) {
+                    console.error(error);
+                    return res.redirect('/red/inicio?mensaje=Error en la edicion de datos');
+                }
+            }
+            else {
+                const mensajeError = 'Datos Incorrectos';
+                return res.redirect('/red/editar/' + parametrosRuta.id + '?error=' + mensajeError);
+            }
+        }
+        catch (e) {
+            console.error(e);
+            throw new common_1.BadRequestException({
+                mensaje: 'Error validando datos'
+            });
         }
     }
 };
@@ -173,14 +229,24 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], RedController.prototype, "eliminarRed", null);
 __decorate([
-    common_1.Post('/editarDesdeVista/:id'),
+    common_1.Get('editar/:id'),
+    __param(0, common_1.Param()),
+    __param(1, common_1.Query()),
+    __param(2, common_1.Res()),
+    __param(3, common_1.Session()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], RedController.prototype, "vistaEditarRed", null);
+__decorate([
+    common_1.Post('editar/:id'),
     __param(0, common_1.Param()),
     __param(1, common_1.Body()),
     __param(2, common_1.Res()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", Promise)
-], RedController.prototype, "editarDesdeVista", null);
+], RedController.prototype, "editarRed", null);
 RedController = __decorate([
     common_1.Controller('red'),
     __metadata("design:paramtypes", [red_service_1.RedService])

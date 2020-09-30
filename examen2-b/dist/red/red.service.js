@@ -25,7 +25,7 @@ let RedService = class RedService {
         return this.repository.save(nuevaRed);
     }
     buscarTodos(textoConsulta) {
-        var valorNumerico;
+        let valorNumerico;
         if (parseInt(textoConsulta)) {
             valorNumerico = parseInt(textoConsulta);
         }

@@ -16,7 +16,7 @@ export class RedService {
     }
 
     buscarTodos(textoConsulta?:string) {
-        var valorNumerico: number;
+        let valorNumerico: number;
         if(parseInt(textoConsulta)){valorNumerico = parseInt(textoConsulta)}
         if(textoConsulta !== undefined) {
             if(valorNumerico !== undefined) {

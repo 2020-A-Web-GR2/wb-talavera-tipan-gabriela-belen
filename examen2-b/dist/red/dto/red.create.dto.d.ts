@@ -1,7 +1,7 @@
 export declare class RedCreateDto {
     nombre: string;
     tipo: string;
-    numElements: number;
+    numElementos: number;
     medio: string;
     alcance: number;
 }

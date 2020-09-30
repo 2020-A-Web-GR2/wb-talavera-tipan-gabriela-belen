@@ -9,7 +9,6 @@ import {
 
 export class RedCreateDto {
 
-    @IsAlpha()
     @IsNotEmpty()
     @MinLength(3)
     @MaxLength(60)
@@ -24,7 +23,7 @@ export class RedCreateDto {
     @IsNotEmpty()
     @IsInt()
     @IsPositive()
-    numElements: number;
+    numElementos: number;
 
     @IsAlpha()
     @IsNotEmpty()

@@ -1,62 +1,69 @@
-
 <% const esAdministrador = roles.some( (rol)=> rol == 'Administrador')%>
 
-<% if(esAdministrador){%>
+if(esAdministrador){%>
+
+    <%-include('../style-generals/style-generals')%>
 
 <% const existeRed = typeof red != 'undefined'%>
 
 <% let existeNombre = typeof nombre !== 'undefined' %>
 <% let existeTipo = typeof tipo !== 'undefined' %>
-<% let existeNumElements = typeof numElements !== 'undefined' %>
+<% let existeNumElementos = typeof numElementos !== 'undefined' %>
 <% let existeMedio = typeof medio !== 'undefined' %>
 <% let existeAlcance = typeof alcance !== 'undefined' %>
-
-<h1> <%= existeRed ? 'Editar' : 'Crear Nueva'%> Red</h1>
-<% let href = existeRed ? "/red/editarDesdeVista/"+red.id : "/red/crear"%>
 
 <%if(existeRed){%>
     <% existeNombre = true %>
     <% existeTipo = true %>
-    <% existeNumElements = true %>
+    <% existeNumElementos = true %>
     <% existeMedio = true %>
     <% existeAlcance = true %>
     <% nombre = red.nombre %>
     <% tipo = red.tipo %>
-    <% numElements = red.numElements %>
+    <% numElementos = red.numElementos %>
     <% medio = red.medio %>
     <% alcance = red.alcance %>
 <%}%>
 
-<% if(error !== undefined) {%>
+<h1> <%= existeRed ? 'Editar' : 'Crear Nueva'%> Red</h1>
+
+    <% if(typeof error !== undefined) {%>
     <p>MENSAJE ERROR: <%= error%></p>
 <% }%>
 
-<form action="<%= existeRed ? '/red/editar/'+red.id:'/red/crear'%>" method="POST">
-
-    <label for="nombreID">Nombre:</label>
+<% let href = existeRed ? '/red/editar/'+red.id : '/red/crear'%>
+<form action="<%= href%>" method="POST">
+<div>
+    <label for="nombreID">Nombre:    </label>
     <input id="nombreID" type="text" name="nombre" value="<%= existeNombre ? nombre : '' %>">
     <br>
-
+</div>
+    <div class="col-lg-12">
     <label for="tipoID">Tipo:</label>
     <input id="tipoID" type="text" name="tipo" value="<%= existeTipo ? tipo : '' %>">
     <br>
-
-    <label for="numElementsID">Numero de elementos:</label>
-    <input id="numElementsID" type="text" name="numElements" value="<%= existeNumElements ? numElements : '' %>">
+        </div>
+    <div class="col-lg-12">
+    <label for="numElementosID">Numero de elementos:</label>
+    <input id="numElementosID" type="text" name="numElementos" value="<%= existeNumElementos ? numElementos : '' %>">
     <br>
-
+    </div>
+    <div class="col-lg-12">
     <label for="medioID">Medio:</label>
     <input id="medioID" type="text" name="medio" value="<%= existeMedio ? medio : '' %>">
     <br>
-
+    </div>
+    <div class="col-lg-12">
     <label for="alcanceID">Alcance:</label>
-    <input id="alcanceID" type="text" name="alcance" value="<%= existeAlcance ? alcance : '' %>">
+    <input id="alcanceID" type="text" name="alcance" value="<%=existeAlcance ? alcance : '' %>">
     <br>
+    </div>
+    <div class="col-lg-12">
 
-    <button type="submit">SUBMIT <%=existeRed ? "EDITAR" : "CREAR" %></button>
+    <button type="submit"><%=existeRed ? "Editar Red" : 'Crear Red'%> </button>
     <button type="reset">RESET</button>
+    </div>
 </form>
 <a href="/red/inicio">
-    <button type="button">CANCELAR</button>
+    <center><button type="button">CANCELAR</button></center>
 </a>
-<% } %>

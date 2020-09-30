@@ -2487,7 +2487,7 @@
         "affectsGlobalScope": false
       },
       "../src/red/red.service.ts": {
-        "version": "37d478414d6ec79bf367c1be2300f713c97e5775c88fed5090e8a1ce93013d3e",
+        "version": "8719f490b0c7764d140464516856a9cc6ac48c7961fc8952612b49fa6043bd43",
         "signature": "ba5486efea542ba6c4120667b30fd0e864e4b480a83b3f9c70c98c6810890d2d",
         "affectsGlobalScope": false
       },
@@ -3107,13 +3107,18 @@
         "affectsGlobalScope": false
       },
       "../src/red/dto/red.create.dto.ts": {
-        "version": "1d0e0db1b4a914327b8fabb1810c8053330b820d29ef3300570ed3844ef6eb13",
-        "signature": "6797cbd5d1697c7f5f90b1cece88467f339f17ae57d1f4565c8058142bda7e43",
+        "version": "188c311c61566f1bcf799a4c216b4cb854ea5ca04244d79e17db26e88a13ede5",
+        "signature": "40e44c6c6a5980d6a900d1fa269004e7ec15fb7ba89f89e8ef22107726a8f677",
+        "affectsGlobalScope": false
+      },
+      "../src/red/dto/red.update.dto.ts": {
+        "version": "6e6a1882489f18de01a9be38cbf842e8b0d0b9026b293a6dfddead31c4bfe4e9",
+        "signature": "ff31a2e985db4778135901a3b8c368339b5f4b49e49e1e0d03b8be83622760f9",
         "affectsGlobalScope": false
       },
       "../src/red/red.controller.ts": {
-        "version": "efdec50a4e376b6c5d603e4906c6a6380780ced8528d33a2be80e6743a1c6982",
-        "signature": "1fc18803e907326d6d763c55b15449ee3f21d80eff412b7225a524572728c824",
+        "version": "717c25991cf58868f98012bb3c06390d484ef437d25e78392bbbbd0bbb937333",
+        "signature": "af48bddc3170c45f8c98072f8a70413a996219870f195fd1290f473e30c2dd56",
         "affectsGlobalScope": false
       },
       "../src/red/red.module.ts": {
@@ -3309,11 +3314,6 @@
       "../src/main.ts": {
         "version": "374f24f7a082a52842225c6000ebfe2204421c49249f04b93535632357ed42fc",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6",
-        "affectsGlobalScope": false
-      },
-      "../src/red/dto/red.update.dto.ts": {
-        "version": "2ab14642ca222bfa15ddfca76ae32efe7bcaf1cef2ffa21070a0ac3eb9f371df",
-        "signature": "7f6c1eda40a7e321115e966da8182925fad40ee53a246e85a084cb51e2a269ac",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/anymatch/index.d.ts": {
@@ -6604,6 +6604,7 @@
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/class-validator/types/index.d.ts",
         "../src/red/dto/red.create.dto.ts",
+        "../src/red/dto/red.update.dto.ts",
         "../src/red/red.entity.ts",
         "../src/red/red.service.ts"
       ],
