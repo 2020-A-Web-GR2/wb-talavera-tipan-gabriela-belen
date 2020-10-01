@@ -5,4 +5,5 @@ export declare class AppController {
     getHello(): string;
     login(response: any): any;
     loginPost(parametrosConsulta: any, response: any, session: any): any;
+    logout(session: any, response: any, request: any): any;
 }

@@ -23,7 +23,7 @@ let AppController = class AppController {
         return this.appService.getHello();
     }
     login(response) {
-        return response.render('inicio/login');
+        return response.render('red/login');
     }
     loginPost(parametrosConsulta, response, session) {
         const usuario = parametrosConsulta.usuario;
@@ -36,6 +36,12 @@ let AppController = class AppController {
         else {
             return response.redirect('/login');
         }
+    }
+    logout(session, response, request) {
+        session.username = undefined;
+        session.roles = undefined;
+        request.session.destroy();
+        return response.redirect('login');
     }
 };
 __decorate([
@@ -60,6 +66,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "loginPost", null);
+__decorate([
+    common_1.Get('logout'),
+    __param(0, common_1.Session()),
+    __param(1, common_1.Res()),
+    __param(2, common_1.Req()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "logout", null);
 AppController = __decorate([
     common_1.Controller(),
     __metadata("design:paramtypes", [app_service_1.AppService])

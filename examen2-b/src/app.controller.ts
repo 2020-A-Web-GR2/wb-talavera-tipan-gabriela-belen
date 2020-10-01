@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Res, Session} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, Res, Session} from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -9,11 +9,12 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
   @Get('login')
   login(
       @Res() response
   ){
-    return response.render('inicio/login')
+    return response.render('red/login')
   }
 
   @Post('login')
@@ -31,6 +32,18 @@ export class AppController {
     }else{
       return response.redirect('/login')
     }
+  }
+
+  @Get('logout')
+  logout(
+      @Session() session,
+      @Res() response,
+      @Req() request
+  ){
+    session.username = undefined;
+    session.roles = undefined;
+    request.session.destroy();
+    return response.redirect('login')
   }
 
 }

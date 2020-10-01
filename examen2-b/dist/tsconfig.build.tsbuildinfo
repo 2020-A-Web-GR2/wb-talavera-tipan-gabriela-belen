@@ -1162,8 +1162,8 @@
         "affectsGlobalScope": false
       },
       "../src/app.controller.ts": {
-        "version": "7f25265e811ef479d0cded6b7300fb5ad839139776103b07d348bd3f6da4243b",
-        "signature": "b4938537229b60c1ffc65fe150b5a2e6788d4d55305ad8f35eb361df05269b2f",
+        "version": "6a1c3f0ba3c9d232334a264d45bcaa8b5112b4431932004e3974b4dc89e64dda",
+        "signature": "87fd40be99c3c401e48b8130220becb78c8c827f999c1ad4f33202917524524f",
         "affectsGlobalScope": false
       },
       "../node_modules/typeorm/schema-builder/options/tablecolumnoptions.d.ts": {
@@ -3127,7 +3127,7 @@
         "affectsGlobalScope": false
       },
       "../src/app.module.ts": {
-        "version": "3589ebd5dabb32fc3867d9abf02c65f08c0dbb869f8d6659adc68b272879be2b",
+        "version": "625ad3590ee14c1bb4bd953e3a82c842ccf01b1f4a567fedcb6d8bbfdcef9a46",
         "signature": "9fc7f7b6ad854404973b8cba8e6d883f758237991968e9a3965d716d46f1da88",
         "affectsGlobalScope": false
       },

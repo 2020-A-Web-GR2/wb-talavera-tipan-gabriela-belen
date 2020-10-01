@@ -26,3 +26,16 @@ import {RedEntity} from "./red/red.entity";
   providers: [AppService],
 })
 export class AppModule {}
+
+
+
+
+
+
+
+
+
+
+
+
+
